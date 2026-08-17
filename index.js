@@ -2,6 +2,7 @@ const heading = document.querySelector("h1");
 
 const btnContainer = document.getElementById("button-container");
 const btnNumSquares = document.createElement("button");
+const btnClear = document.createElement("button");
 
 btnNumSquares.textContent = "How many squares?";
 btnNumSquares.classList.add("btn-num-squares");
@@ -20,7 +21,26 @@ btnNumSquares.addEventListener("click", () => {
     }
 });
 
+btnClear.textContent = "Clear Sketch";
+btnClear.classList.add("btn-clear");
+btnContainer.appendChild(btnClear);
+
+btnClear.addEventListener("click", function(){
+    const square = document.querySelectorAll(".grid-square");
+    square.forEach(function(square){
+        square.style.backgroundColor = "white";
+    })
+
+})
+
 const gridContainer = document.getElementById("grid-container");
+
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256); 
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;           
+}
 
 function createGrid(gridSize){
     gridContainer.innerHTML = "";
@@ -32,6 +52,11 @@ function createGrid(gridSize){
         square.classList.add("grid-square")
         square.style.flexBasis = `${squareSizePercentage}%`;
         square.style.height = `${squareSizePercentage}%`;
+        
+        square.style.backgroundColor = "white";
+        square.addEventListener("mouseover", () => {
+            square.style.backgroundColor = getRandomColor(); 
+        });
         gridContainer.appendChild(square);
     }
 }
